@@ -65,6 +65,13 @@ package away3d.textures
 			this.height = Math.pow(2, data.readUnsignedByte());
 			this.numTextures = data.readUnsignedByte();
 			this.data = data;
+			
+			if (data[5] != 0 && data[6] == 255)
+			{
+				var emptyMipmaps:Boolean = (data[5] & 0x01) == 1;
+				var numTextures:int = data[5] >> 1 & 0x7f;
+				this.numTextures = emptyMipmaps ? 1 : numTextures;
+			}
 		}
 	
 	}
